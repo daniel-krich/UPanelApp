@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserPanel", "UserPanel\UserPanel.csproj", "{D84467CA-A9BD-4277-8D0A-EAA4432E7DB5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserPanelWebApi", "UserPanelWebApi\UserPanelWebApi.csproj", "{29B58D24-98C6-48B1-BE68-8C9D67F8C20D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D84467CA-A9BD-4277-8D0A-EAA4432E7DB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D84467CA-A9BD-4277-8D0A-EAA4432E7DB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D84467CA-A9BD-4277-8D0A-EAA4432E7DB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D84467CA-A9BD-4277-8D0A-EAA4432E7DB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29B58D24-98C6-48B1-BE68-8C9D67F8C20D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29B58D24-98C6-48B1-BE68-8C9D67F8C20D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29B58D24-98C6-48B1-BE68-8C9D67F8C20D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29B58D24-98C6-48B1-BE68-8C9D67F8C20D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {37D01040-16ED-4EBA-9AA7-93C14F65ADEA}
+	EndGlobalSection
+EndGlobal
