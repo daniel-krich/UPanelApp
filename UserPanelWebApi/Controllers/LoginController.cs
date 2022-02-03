@@ -15,23 +15,22 @@ namespace UserPanelWebApi.Controllers
     {
         private readonly ILogger<LoginController> _logger;
 
+        private readonly UserModel[] _accounts;
+
         public LoginController(ILogger<LoginController> logger)
         {
             _logger = logger;
-        }
 
-        [HttpPost]
-        public string Get([FromBody] LoginModel loginModel)
-        {
-            UserModel[] accounts = new UserModel[3];
-            accounts[0] = new UserModel {
+            _accounts = new UserModel[3];
+            _accounts[0] = new UserModel
+            {
                 Username = "dan",
                 Password = "228228",
                 Email = "dan@walla.com",
                 Description = "whassuuppp everybody",
                 Age = 20
             };
-            accounts[1] = new UserModel
+            _accounts[1] = new UserModel
             {
                 Username = "Daniel",
                 Password = "123456789",
@@ -39,7 +38,7 @@ namespace UserPanelWebApi.Controllers
                 Description = "this is a test to my super simple no db api",
                 Age = 18
             };
-            accounts[2] = new UserModel
+            _accounts[2] = new UserModel
             {
                 Username = "zogov",
                 Password = "123456",
@@ -47,14 +46,25 @@ namespace UserPanelWebApi.Controllers
                 Description = "Hello world :)",
                 Age = 28
             };
+        }
 
-            for (int i = 0; i < accounts.Length; i++)
+        [HttpGet, HttpDelete, HttpPut]
+        public string ErrHttpMethod()
+        {
+            _logger.Log(LogLevel.Warning, "Ilegal access to /api/login");
+            return "Method error, only Post allowed.";
+        }
+
+        [HttpPost]
+        public string LoginToAccount([FromBody] LoginModel loginModel)
+        {
+            for (int i = 0; i < _accounts.Length; i++)
             {
-                if (accounts[i].Username == loginModel.Username &&
-                    accounts[i].Password == loginModel.Password)
+                if (_accounts[i].Username == loginModel.Username &&
+                    _accounts[i].Password == loginModel.Password)
                 {
-                    _logger.Log(LogLevel.Information, $"{accounts[i].Username} logged in.");
-                    return JsonConvert.SerializeObject(accounts[i]);
+                    _logger.Log(LogLevel.Information, $"{_accounts[i].Username} logged in.");
+                    return JsonConvert.SerializeObject(_accounts[i]);
                 }
             }
             _logger.Log(LogLevel.Warning, $"{loginModel.Username} tried to log in, but failed.");
