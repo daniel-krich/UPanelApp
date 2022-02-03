@@ -15,7 +15,7 @@ namespace UserPanelWebApi.Controllers
     {
         private readonly ILogger<LoginController> _logger;
 
-        private static UserModel[] Accounts { get; }
+        private static UserEntity[] Accounts { get; }
 
         public LoginController(ILogger<LoginController> logger)
         {
@@ -24,8 +24,8 @@ namespace UserPanelWebApi.Controllers
 
         static LoginController()
         {
-            Accounts = new UserModel[3];
-            Accounts[0] = new UserModel
+            Accounts = new UserEntity[3];
+            Accounts[0] = new UserEntity
             {
                 Username = "dan",
                 Password = "228228",
@@ -33,7 +33,7 @@ namespace UserPanelWebApi.Controllers
                 Description = "whassuuppp everybody",
                 Age = 20
             };
-            Accounts[1] = new UserModel
+            Accounts[1] = new UserEntity
             {
                 Username = "Daniel",
                 Password = "123456789",
@@ -41,7 +41,7 @@ namespace UserPanelWebApi.Controllers
                 Description = "this is a test to my super simple no db api",
                 Age = 18
             };
-            Accounts[2] = new UserModel
+            Accounts[2] = new UserEntity
             {
                 Username = "zogov",
                 Password = "123456",
@@ -59,7 +59,7 @@ namespace UserPanelWebApi.Controllers
         }
 
         [HttpPost]
-        public string LoginToAccount([FromBody] LoginModel loginModel)
+        public string LoginToAccount([FromBody] LoginEntity loginModel)
         {
             for (int i = 0; i < Accounts.Length; i++)
             {
@@ -71,7 +71,7 @@ namespace UserPanelWebApi.Controllers
                 }
             }
             _logger.Log(LogLevel.Warning, $"{loginModel.Username} tried to log in, but failed.");
-            return JsonConvert.SerializeObject(new ErrorModel(1, "Username or password doesn't exists"));
+            return JsonConvert.SerializeObject(new ErrorEntity(1, "Username or password doesn't exists"));
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace UserPanelWebApi.Models
 {
-    public class UserModel
+    public class UserEntity
     {
         public string Username { get; set; }
         public string Password { get; set; }
