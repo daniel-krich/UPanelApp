@@ -15,14 +15,17 @@ namespace UserPanelWebApi.Controllers
     {
         private readonly ILogger<LoginController> _logger;
 
-        private readonly UserModel[] _accounts;
+        private static UserModel[] Accounts { get; }
 
         public LoginController(ILogger<LoginController> logger)
         {
             _logger = logger;
+        }
 
-            _accounts = new UserModel[3];
-            _accounts[0] = new UserModel
+        static LoginController()
+        {
+            Accounts = new UserModel[3];
+            Accounts[0] = new UserModel
             {
                 Username = "dan",
                 Password = "228228",
@@ -30,7 +33,7 @@ namespace UserPanelWebApi.Controllers
                 Description = "whassuuppp everybody",
                 Age = 20
             };
-            _accounts[1] = new UserModel
+            Accounts[1] = new UserModel
             {
                 Username = "Daniel",
                 Password = "123456789",
@@ -38,7 +41,7 @@ namespace UserPanelWebApi.Controllers
                 Description = "this is a test to my super simple no db api",
                 Age = 18
             };
-            _accounts[2] = new UserModel
+            Accounts[2] = new UserModel
             {
                 Username = "zogov",
                 Password = "123456",
@@ -58,13 +61,13 @@ namespace UserPanelWebApi.Controllers
         [HttpPost]
         public string LoginToAccount([FromBody] LoginModel loginModel)
         {
-            for (int i = 0; i < _accounts.Length; i++)
+            for (int i = 0; i < Accounts.Length; i++)
             {
-                if (_accounts[i].Username == loginModel.Username &&
-                    _accounts[i].Password == loginModel.Password)
+                if (Accounts[i].Username == loginModel.Username &&
+                    Accounts[i].Password == loginModel.Password)
                 {
-                    _logger.Log(LogLevel.Information, $"{_accounts[i].Username} logged in.");
-                    return JsonConvert.SerializeObject(_accounts[i]);
+                    _logger.Log(LogLevel.Information, $"{Accounts[i].Username} logged in.");
+                    return JsonConvert.SerializeObject(Accounts[i]);
                 }
             }
             _logger.Log(LogLevel.Warning, $"{loginModel.Username} tried to log in, but failed.");
