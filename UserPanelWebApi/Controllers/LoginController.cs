@@ -29,7 +29,7 @@ namespace UserPanelWebApi.Controllers
                 Password = "228228",
                 Email = "dan@walla.com",
                 Description = "whassuuppp everybody",
-                Age = 30
+                Age = 20
             };
             accounts[1] = new UserModel
             {
@@ -37,7 +37,7 @@ namespace UserPanelWebApi.Controllers
                 Password = "123456789",
                 Email = "Daniel@walla.com",
                 Description = "this is a test to my super simple no db api",
-                Age = 30
+                Age = 18
             };
             accounts[2] = new UserModel
             {
@@ -45,7 +45,7 @@ namespace UserPanelWebApi.Controllers
                 Password = "123456",
                 Email = "zogov@walla.com",
                 Description = "Hello world :)",
-                Age = 30
+                Age = 28
             };
 
             for (int i = 0; i < accounts.Length; i++)
