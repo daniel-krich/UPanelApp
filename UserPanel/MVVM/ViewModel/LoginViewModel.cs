@@ -15,6 +15,20 @@ namespace UserPanel.MVVM.ViewModel
     public class LoginViewModel : ObservableObject
     {
         public string Username { get; set; }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        { 
+            get
+            {
+                return _errorMessage;
+            }
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged();
+            }
+        }
         public RelayCommand Login { get; set; }
         public RelayCommand UpdatePassword { get; set; }
         public LoginViewModel(IAuthenticator authenticator)
@@ -24,7 +38,7 @@ namespace UserPanel.MVVM.ViewModel
                 PasswordBox psd = o as PasswordBox;
                 if (Username.Length == 0 || psd.Password.Length == 0)
                 {
-                    MessageBox.Show("One or more fields are empty", "Error");
+                    ErrorMessage = "One or more fields are empty";
                 }
                 else
                 {
@@ -33,12 +47,11 @@ namespace UserPanel.MVVM.ViewModel
 
                     if(authenticator.Authorized)
                     {
-                        MessageBox.Show("Press OK to continue, " + Username, "Login success");
                         ShellViewModelInstance.CurrentView = new UserPanelViewModel(authenticator);
                     }
                     else
                     {
-                        MessageBox.Show(errm.Issue, "Fail code: " + errm.Code);
+                        ErrorMessage = errm.Issue;
                     }
 
                 }

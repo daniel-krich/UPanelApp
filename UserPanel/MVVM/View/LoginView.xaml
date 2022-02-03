@@ -118,6 +118,18 @@
                     CommandParameter="{Binding ElementName=ProtectedPassword}"
                     FontFamily="Bahnschrift Condensed"
                     FontSize="20"/>
+
+            <!-- Error block -->
+            <TextBlock Text="{Binding ErrorMessage, Mode=OneWay}"
+                       Grid.Row="5"
+                       Grid.Column="1"
+                       Grid.ColumnSpan="2"
+                       FontSize="13"
+                       Foreground="#ff7045"
+                       FontWeight="DemiBold"
+                       TextAlignment="Center"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
         </Grid>
     </Border>
 </UserControl>
