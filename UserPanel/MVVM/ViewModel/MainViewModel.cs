@@ -15,21 +15,22 @@ namespace UserPanel.MVVM.ViewModel
 
     public class MainViewModel : BaseViewModel, INavigator
     {
+        private string _appTitle = "My simple MVVM app";
         public string AppTitle
         {
             get
             {
-                AutoUpdateProperty(200);
-                if (_authenticator.Authorized)
-                    return $"Current user: {_authenticator.User.Username}";
-                else
-                    return "My Simple MVVM app";
+                return _appTitle;
+            }
+            set
+            {
+                _appTitle = value;
+                OnPropertyChanged();
             }
         }
 
         public RelayCommand SetMainPage { get; set; }
         private object _currentView;
-        private IAuthenticator _authenticator;
         public object CurrentView
         {
             get
@@ -43,9 +44,14 @@ namespace UserPanel.MVVM.ViewModel
             }
         }
 
-        public MainViewModel(IAuthenticator authenticator)
+        public MainViewModel()
         {
-            _authenticator = authenticator;
+            
+        }
+
+        public void SetWindowTitle(string title)
+        {
+            AppTitle = title;
         }
     }
 }

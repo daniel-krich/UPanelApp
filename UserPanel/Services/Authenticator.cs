@@ -18,10 +18,12 @@ namespace UserPanel.Services
         public bool Authorized { get; set; }
 
         private readonly IErrorHandler _errorHandler;
+        private readonly INavigator _navigator;
 
-        public Authenticator(IErrorHandler errorHandler)
+        public Authenticator(INavigator navigator, IErrorHandler errorHandler)
         {
             _errorHandler = errorHandler;
+            _navigator = navigator;
         }
 
         public async Task Auth(string username, string password)
@@ -37,12 +39,22 @@ namespace UserPanel.Services
                 HttpResponseMessage res = await request.PostAsync(LoginUrl, payload);
                 User = JsonConvert.DeserializeObject<UserModel>(await res.Content.ReadAsStringAsync());
                 Authorized = User.Username == username && username.Length > 0 ? true : false;
+
+                if (Authorized)
+                    _navigator.SetWindowTitle($"Current user: {User.Username}");
             }
             catch(Exception e)
             {
                 _errorHandler.ErrorReport(e);
             }
 
+        }
+
+        public void Logout()
+        {
+            User = null;
+            Authorized = false;
+            _navigator.SetWindowTitle("My simple MVVM app");
         }
     }
 }

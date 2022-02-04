@@ -9,5 +9,6 @@ namespace UserPanel.Services
     public interface INavigator
     {
         object CurrentView { get; set; }
+        void SetWindowTitle(string title);
     }
 }

@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using UserPanel.MVVM.ViewModel;
 
-namespace UserPanel.Core
+namespace UserPanel.MVVM.ViewModel
 {
     public class BaseViewModel : INotifyPropertyChanged, IDisposable
     {
