@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using UserPanel.Core;
@@ -10,7 +13,7 @@ using UserPanel.Services;
 
 namespace UserPanel.MVVM.ViewModel
 {
-    public class UserPanelViewModel : ObservableObject
+    public class UserPanelViewModel : BaseViewModel
     {
         private UserModel _currentUser;
         public UserModel CurrentUser {
@@ -25,16 +28,15 @@ namespace UserPanel.MVVM.ViewModel
             }
         }
         public RelayCommand GotoLogin { get; set; }
-        public UserPanelViewModel(IAuthenticator authenticator)
+        public UserPanelViewModel(INavigator navigator, IAuthenticator authenticator)
         {
-            if(authenticator.Authorized)
-                CurrentUser = authenticator.User;
-            else
-                ShellViewModelInstance.CurrentView = new LoginViewModel(new Authenticator());
+            CurrentUser = authenticator.User;
 
             GotoLogin = new RelayCommand(o =>
             {
-                ShellViewModelInstance.CurrentView = new LoginViewModel(new Authenticator());
+                authenticator.Authorized = false;
+                authenticator.User = null;
+                navigator.CurrentView = AppServices.ServiceProvider.GetRequiredService<LoginViewModel>();
             });
         }
     }

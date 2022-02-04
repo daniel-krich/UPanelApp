@@ -25,9 +25,6 @@ namespace UserPanel
         public MainWindow()
         {
             InitializeComponent();
-
-            // Set the DataContext to ShellViewModel
-            DataContext = ObservableObject.ShellViewModelInstance;
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)

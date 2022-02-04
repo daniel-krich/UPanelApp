@@ -17,20 +17,31 @@ namespace UserPanel.Services
         public UserModel User { get; set; }
         public bool Authorized { get; set; }
 
-        public void Auth(string username, string password, out ErrorModel errorModel)
+        private readonly IErrorHandler _errorHandler;
+
+        public Authenticator(IErrorHandler errorHandler)
         {
-            HttpClient request = new HttpClient();
-            StringContent payload = new StringContent(JsonConvert.SerializeObject(new LoginModel { 
-                Username = username,
-                Password = password
-            }), Encoding.UTF8, "application/json");
-            HttpResponseMessage res = request.PostAsync(LoginUrl, payload).Result;
-            User = JsonConvert.DeserializeObject<UserModel>(res.Content.ReadAsStringAsync().Result);
-            Authorized = User.Username == username && username.Length > 0 ? true : false;
-            if (!Authorized)
-                errorModel = JsonConvert.DeserializeObject<ErrorModel>(res.Content.ReadAsStringAsync().Result);
-            else
-                errorModel = new ErrorModel();
+            _errorHandler = errorHandler;
+        }
+
+        public async Task Auth(string username, string password)
+        {
+            try
+            {
+                HttpClient request = new HttpClient();
+                StringContent payload = new StringContent(JsonConvert.SerializeObject(new LoginModel
+                {
+                    Username = username,
+                    Password = password
+                }), Encoding.UTF8, "application/json");
+                HttpResponseMessage res = await request.PostAsync(LoginUrl, payload);
+                User = JsonConvert.DeserializeObject<UserModel>(await res.Content.ReadAsStringAsync());
+                Authorized = User.Username == username && username.Length > 0 ? true : false;
+            }
+            catch(Exception e)
+            {
+                _errorHandler.ErrorReport(e);
+            }
 
         }
     }

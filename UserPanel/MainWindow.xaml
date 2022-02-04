@@ -34,7 +34,7 @@
             <Border Background="#212121" CornerRadius="5,5,0,0"
                         x:Name="AppTopBorder" MouseDown="AppTopBorder_MouseDown">
                 <Grid Grid.Row="0" HorizontalAlignment="Stretch">
-                    <Label Margin="5,0,0,0" Content="{Binding AppTitle, Mode=OneTime}" Foreground="White"/>
+                    <Label Margin="5,0,0,0" Content="{Binding AppTitle, Mode=OneWay}" Foreground="White"/>
                     <StackPanel VerticalAlignment="Center"
                             HorizontalAlignment="Right"
                             Orientation="Horizontal"

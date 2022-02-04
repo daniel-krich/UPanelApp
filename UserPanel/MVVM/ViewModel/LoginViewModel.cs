@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Security;
 using System.Text;
@@ -12,7 +13,7 @@ using UserPanel.Services;
 
 namespace UserPanel.MVVM.ViewModel
 {
-    public class LoginViewModel : ObservableObject
+    public class LoginViewModel : BaseViewModel
     {
         public string Username { get; set; }
 
@@ -31,10 +32,10 @@ namespace UserPanel.MVVM.ViewModel
         }
         public RelayCommand Login { get; set; }
         public RelayCommand UpdatePassword { get; set; }
-        public LoginViewModel(IAuthenticator authenticator)
+        public LoginViewModel(INavigator navigator, IAuthenticator authenticator)
         {
 
-            Login = new RelayCommand(o => {
+            Login = new RelayCommand(async o => {
                 PasswordBox psd = o as PasswordBox;
                 if (Username.Length == 0 || psd.Password.Length == 0)
                 {
@@ -42,16 +43,14 @@ namespace UserPanel.MVVM.ViewModel
                 }
                 else
                 {
-                    ErrorModel errm;
-                    authenticator.Auth(Username, psd.Password, out errm);
-
-                    if(authenticator.Authorized)
+                    await authenticator.Auth(Username, psd.Password);
+                    if (authenticator.Authorized)
                     {
-                        ShellViewModelInstance.CurrentView = new UserPanelViewModel(authenticator);
+                        navigator.CurrentView = AppServices.ServiceProvider.GetRequiredService<UserPanelViewModel>();
                     }
                     else
                     {
-                        ErrorMessage = errm.Issue;
+                        ErrorMessage = "Username or password didn't match";
                     }
 
                 }
