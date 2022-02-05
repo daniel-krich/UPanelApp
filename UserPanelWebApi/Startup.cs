@@ -27,7 +27,8 @@ namespace UserPanelWebApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<QueryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            //services.AddDbContext<QueryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<QueryContext>(options => options.UseMySQL(Configuration.GetConnectionString("Default")));
             services.AddControllers();
         }
 

@@ -13,7 +13,9 @@ namespace UserPanelWebApi.Entities
     [Index(nameof(Email), IsUnique = true)]
     public class UserEntity
     {
+        [Key]
         public int Id { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string Username { get; set; }
