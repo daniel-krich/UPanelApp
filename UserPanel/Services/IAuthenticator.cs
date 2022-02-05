@@ -13,6 +13,7 @@ namespace UserPanel.Services
 
         bool Authorized { get; set; }
 
-        Task Auth(string username, string password);
+        Task<ErrorModel> Auth(string username, string password);
+        void Logout();
     }
 }

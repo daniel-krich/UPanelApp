@@ -26,7 +26,7 @@ namespace UserPanel.Services
             _navigator = navigator;
         }
 
-        public async Task Auth(string username, string password)
+        public async Task<ErrorModel> Auth(string username, string password)
         {
             try
             {
@@ -42,10 +42,14 @@ namespace UserPanel.Services
 
                 if (Authorized)
                     _navigator.SetWindowTitle($"Current user: {User.Username}");
+
+                ErrorModel errm = JsonConvert.DeserializeObject<ErrorModel>(await res.Content.ReadAsStringAsync());
+                return errm;
             }
             catch(Exception e)
             {
                 _errorHandler.ErrorReport(e);
+                return new ErrorModel(-1, "Critical error");
             }
 
         }

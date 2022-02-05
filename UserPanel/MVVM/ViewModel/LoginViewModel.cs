@@ -43,14 +43,14 @@ namespace UserPanel.MVVM.ViewModel
                 }
                 else
                 {
-                    await authenticator.Auth(Username, psd.Password);
+                    ErrorModel errm = await authenticator.Auth(Username, psd.Password);
                     if (authenticator.Authorized)
                     {
                         navigator.CurrentView = AppServices.ServiceProvider.GetRequiredService<UserPanelViewModel>();
                     }
                     else
                     {
-                        ErrorMessage = "Username or password didn't match";
+                        ErrorMessage = errm.Issue;
                     }
 
                 }

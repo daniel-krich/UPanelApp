@@ -27,15 +27,14 @@ namespace UserPanel.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-        public RelayCommand GotoLogin { get; set; }
+        public RelayCommand Logout { get; set; }
         public UserPanelViewModel(INavigator navigator, IAuthenticator authenticator)
         {
             CurrentUser = authenticator.User;
 
-            GotoLogin = new RelayCommand(o =>
+            Logout = new RelayCommand(o =>
             {
-                authenticator.Authorized = false;
-                authenticator.User = null;
+                authenticator.Logout();
                 navigator.CurrentView = AppServices.ServiceProvider.GetRequiredService<LoginViewModel>();
             });
         }
