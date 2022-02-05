@@ -27,6 +27,7 @@ namespace UserPanel.Core
             services.AddSingleton<IErrorHandler, ErrorHandler>();
 
             services.AddTransient<LoginViewModel>();
+            services.AddTransient<RegisterViewModel>();
             services.AddTransient<UserPanelViewModel>();
 
             services.AddSingleton<MainViewModel>();

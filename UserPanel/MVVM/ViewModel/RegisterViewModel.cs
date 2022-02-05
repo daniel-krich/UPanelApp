@@ -2,38 +2,33 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
-using System.Security;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using UserPanel.Core;
 using UserPanel.MVVM.Model;
 using UserPanel.Services;
 
 namespace UserPanel.MVVM.ViewModel
 {
-    public class LoginViewModel : BaseViewModel
+    class RegisterViewModel : BaseViewModel
     {
-        public string Username { get; set; }
-
-        private LoginModel _logModel;
-        public LoginModel LogModel
-        {
+        private RegisterModel _registerModel;
+        public RegisterModel RegModel
+        { 
             get
             {
-                return _logModel;
+                return _registerModel;
             }
             set
             {
-                _logModel = value;
+                _registerModel = value;
                 OnPropertyChanged();
             }
         }
 
         private string _errorMessage;
         public string ErrorMessage
-        { 
+        {
             get
             {
                 return _errorMessage;
@@ -44,25 +39,28 @@ namespace UserPanel.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
-        
-        public RelayCommand Login { get; set; }
-        public RelayCommand NavigateToRegister { get; set; }
-        public LoginViewModel(INavigator navigator, IAuthenticator authenticator)
-        {
-            LogModel = new LoginModel();
 
-            NavigateToRegister = new RelayCommand(o => {
-                navigator.CurrentView = AppServices.ServiceProvider.GetRequiredService<RegisterViewModel>();
+        public RelayCommand NavigateToLogin { get; set; }
+        public RelayCommand Register { get; set; }
+
+        public RegisterViewModel(INavigator navigator, IAuthenticator authenticator)
+        {
+            RegModel = new RegisterModel();
+
+            NavigateToLogin = new RelayCommand(o => {
+                navigator.CurrentView = AppServices.ServiceProvider.GetRequiredService<LoginViewModel>();
             });
 
-            Login = new RelayCommand(async o => {
-                if (LogModel.Username.Length == 0 || LogModel.Password.Length == 0)
+            Register = new RelayCommand(async o => {
+                if (RegModel.Username.Length == 0 || RegModel.Password.Length == 0 ||
+                    RegModel.Email.Length == 0 || RegModel.Description.Length == 0 ||
+                    RegModel.Age == 0)
                 {
                     ErrorMessage = "One or more fields are empty";
                 }
                 else
                 {
-                    ErrorModel errm = await authenticator.Login(LogModel);
+                    ErrorModel errm = await authenticator.Register(RegModel);
                     if (authenticator.Authorized)
                     {
                         navigator.CurrentView = AppServices.ServiceProvider.GetRequiredService<UserPanelViewModel>();

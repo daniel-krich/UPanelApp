@@ -14,6 +14,7 @@ namespace UserPanel.Services
     public class Authenticator : IAuthenticator
     {
         private static string LoginUrl { get; } = "http://127.0.0.1/api/login";
+        private static string RegisterUrl { get; } = "http://127.0.0.1/api/register";
         public UserModel User { get; set; }
         public bool Authorized { get; set; }
 
@@ -26,19 +27,15 @@ namespace UserPanel.Services
             _navigator = navigator;
         }
 
-        public async Task<ErrorModel> Auth(string username, string password)
+        public async Task<ErrorModel> Login(LoginModel loginModel)
         {
             try
             {
                 HttpClient request = new HttpClient();
-                StringContent payload = new StringContent(JsonConvert.SerializeObject(new LoginModel
-                {
-                    Username = username,
-                    Password = password
-                }), Encoding.UTF8, "application/json");
+                StringContent payload = new StringContent(JsonConvert.SerializeObject(loginModel), Encoding.UTF8, "application/json");
                 HttpResponseMessage res = await request.PostAsync(LoginUrl, payload);
                 User = JsonConvert.DeserializeObject<UserModel>(await res.Content.ReadAsStringAsync());
-                Authorized = User.Username == username && username.Length > 0 ? true : false;
+                Authorized = User.Username == loginModel.Username && loginModel.Username.Length > 0 ? true : false;
 
                 if (Authorized)
                     _navigator.SetWindowTitle($"Current user: {User.Username}");
@@ -47,6 +44,30 @@ namespace UserPanel.Services
                 return errm;
             }
             catch(Exception e)
+            {
+                _errorHandler.ErrorReport(e);
+                return new ErrorModel(-1, "Request timeout error, network issue.");
+            }
+
+        }
+
+        public async Task<ErrorModel> Register(RegisterModel registerModel)
+        {
+            try
+            {
+                HttpClient request = new HttpClient();
+                StringContent payload = new StringContent(JsonConvert.SerializeObject(registerModel), Encoding.UTF8, "application/json");
+                HttpResponseMessage res = await request.PostAsync(RegisterUrl, payload);
+                User = JsonConvert.DeserializeObject<UserModel>(await res.Content.ReadAsStringAsync());
+                Authorized = User.Username == registerModel.Username && registerModel.Username.Length > 0 ? true : false;
+
+                if (Authorized)
+                    _navigator.SetWindowTitle($"Current user: {User.Username}");
+
+                ErrorModel errm = JsonConvert.DeserializeObject<ErrorModel>(await res.Content.ReadAsStringAsync());
+                return errm;
+            }
+            catch (Exception e)
             {
                 _errorHandler.ErrorReport(e);
                 return new ErrorModel(-1, "Critical error");

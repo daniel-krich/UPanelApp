@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UserPanelWebApi\UserPanelWebApi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Page Update="Themes\formComponents\NewPasswordBox.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

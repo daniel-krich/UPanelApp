@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace UserPanelWebApi.Models
 {
-    public class ErrorEntity
+    public class ErrorModel
     {
         public int Code { get; set; }
         public string Issue { get; set; }
 
-        public ErrorEntity(int code, string issue)
+        public ErrorModel(int code, string issue)
         {
             Code = code;
             Issue = issue;
