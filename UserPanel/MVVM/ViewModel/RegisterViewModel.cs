@@ -10,7 +10,7 @@ using UserPanel.Services;
 
 namespace UserPanel.MVVM.ViewModel
 {
-    class RegisterViewModel : BaseViewModel
+    public class RegisterViewModel : BaseViewModel
     {
         private RegisterModel _registerModel;
         public RegisterModel RegModel
@@ -48,7 +48,7 @@ namespace UserPanel.MVVM.ViewModel
             RegModel = new RegisterModel();
 
             NavigateToLogin = new RelayCommand(o => {
-                navigator.CurrentView = AppServices.ServiceProvider.GetRequiredService<LoginViewModel>();
+                navigator.NavigateTo<LoginViewModel>();
             });
 
             Register = new RelayCommand(async o => {
@@ -63,7 +63,7 @@ namespace UserPanel.MVVM.ViewModel
                     ErrorModel errm = await authenticator.Register(RegModel);
                     if (authenticator.Authorized)
                     {
-                        navigator.CurrentView = AppServices.ServiceProvider.GetRequiredService<UserPanelViewModel>();
+                        navigator.NavigateTo<UserPanelViewModel>();
                     }
                     else
                     {

@@ -37,9 +37,6 @@ namespace UserPanel.Services
                 User = JsonConvert.DeserializeObject<UserModel>(await res.Content.ReadAsStringAsync());
                 Authorized = User.Username == loginModel.Username && loginModel.Username.Length > 0 ? true : false;
 
-                if (Authorized)
-                    _navigator.SetWindowTitle($"Current user: {User.Username}");
-
                 ErrorModel errm = JsonConvert.DeserializeObject<ErrorModel>(await res.Content.ReadAsStringAsync());
                 return errm;
             }
@@ -61,9 +58,6 @@ namespace UserPanel.Services
                 User = JsonConvert.DeserializeObject<UserModel>(await res.Content.ReadAsStringAsync());
                 Authorized = User.Username == registerModel.Username && registerModel.Username.Length > 0 ? true : false;
 
-                if (Authorized)
-                    _navigator.SetWindowTitle($"Current user: {User.Username}");
-
                 ErrorModel errm = JsonConvert.DeserializeObject<ErrorModel>(await res.Content.ReadAsStringAsync());
                 return errm;
             }
@@ -79,7 +73,6 @@ namespace UserPanel.Services
         {
             User = null;
             Authorized = false;
-            _navigator.SetWindowTitle("My simple MVVM app");
         }
     }
 }

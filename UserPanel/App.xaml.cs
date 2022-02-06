@@ -19,7 +19,7 @@ namespace UserPanel
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            MainWindow = AppServices.ServiceProvider.GetRequiredService<MainWindow>();
+            MainWindow = AppServices.Configure().GetRequiredService<MainWindow>();
             MainWindow.Show();
             base.OnStartup(e);
         }

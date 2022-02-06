@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 namespace UserPanel.MVVM.ViewModel
 {
 
-    public class MainViewModel : BaseViewModel, INavigator
+    public class MainViewModel : BaseViewModel
     {
         private string _appTitle = "My simple MVVM app";
         public string AppTitle
@@ -47,11 +47,6 @@ namespace UserPanel.MVVM.ViewModel
         public MainViewModel()
         {
             
-        }
-
-        public void SetWindowTitle(string title)
-        {
-            AppTitle = title;
         }
     }
 }

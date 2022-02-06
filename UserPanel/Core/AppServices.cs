@@ -10,16 +10,9 @@ using System.Diagnostics;
 
 namespace UserPanel.Core
 {
-    class AppServices
+    public static class AppServices
     {
-        private IServiceProvider _serviceProvider;
-
-        private static AppServices _instance;
-        private static readonly object _instanceLock = new object();
-
-        public static IServiceProvider ServiceProvider => GetInstance()._serviceProvider;
-
-        private AppServices()
+        public static IServiceProvider Configure()
         {
             IServiceCollection services = new ServiceCollection();
 
@@ -29,29 +22,20 @@ namespace UserPanel.Core
             services.AddTransient<LoginViewModel>();
             services.AddTransient<RegisterViewModel>();
             services.AddTransient<UserPanelViewModel>();
+            services.AddTransient<INavigator, Navigator>();
 
             services.AddSingleton<MainViewModel>();
-            services.AddSingleton<INavigator>(s => s.GetRequiredService<MainViewModel>());
-
-
+            
             services.AddSingleton<MainWindow>(s => new MainWindow()
             {
                 DataContext = s.GetRequiredService<MainViewModel>()
             });
 
+            IServiceProvider serviceProvider = services.BuildServiceProvider();
 
+            serviceProvider.GetRequiredService<INavigator>().NavigateTo<LoginViewModel>();
 
-            _serviceProvider = services.BuildServiceProvider();
-
-            _serviceProvider.GetRequiredService<MainViewModel>().CurrentView = _serviceProvider.GetRequiredService<LoginViewModel>();
-        }
-        
-        private static AppServices GetInstance()
-        {
-            lock (_instanceLock)
-            {
-                return _instance ?? (_instance = new AppServices());
-            }
+            return serviceProvider;
         }
     }
 }

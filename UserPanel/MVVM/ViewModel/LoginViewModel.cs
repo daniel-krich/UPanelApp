@@ -52,7 +52,7 @@ namespace UserPanel.MVVM.ViewModel
             LogModel = new LoginModel();
 
             NavigateToRegister = new RelayCommand(o => {
-                navigator.CurrentView = AppServices.ServiceProvider.GetRequiredService<RegisterViewModel>();
+                navigator.NavigateTo<RegisterViewModel>();
             });
 
             Login = new RelayCommand(async o => {
@@ -65,7 +65,7 @@ namespace UserPanel.MVVM.ViewModel
                     ErrorModel errm = await authenticator.Login(LogModel);
                     if (authenticator.Authorized)
                     {
-                        navigator.CurrentView = AppServices.ServiceProvider.GetRequiredService<UserPanelViewModel>();
+                        navigator.NavigateTo<UserPanelViewModel>();
                     }
                     else
                     {
