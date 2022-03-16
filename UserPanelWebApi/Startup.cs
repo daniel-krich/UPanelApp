@@ -26,7 +26,7 @@ namespace UserPanelWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors();
             //services.AddDbContext<QueryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddDbContext<QueryContext>(options => options.UseMySQL(Configuration.GetConnectionString("Default")));
             services.AddControllers();
@@ -35,6 +35,11 @@ namespace UserPanelWebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(x => x
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins("http://localhost:3000")
+                    .AllowCredentials());
 
             app.UseRouting();
 

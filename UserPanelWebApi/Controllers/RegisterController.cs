@@ -27,13 +27,6 @@ namespace UserPanelWebApi.Controllers
             _queryContext = queryContext;
         }
 
-        [HttpGet, HttpDelete, HttpPut]
-        public string ErrHttpMethod()
-        {
-            _logger.Log(LogLevel.Warning, "Ilegal access to /api/register");
-            return "Method error, only Post allowed.";
-        }
-
         [HttpPost]
         public async Task<string> Register([FromBody] RegisterModel registerModel)
         {

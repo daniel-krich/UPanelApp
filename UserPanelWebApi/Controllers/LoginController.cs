@@ -25,13 +25,6 @@ namespace UserPanelWebApi.Controllers
             _queryContext = queryContext;
         }
 
-        [HttpGet, HttpDelete, HttpPut]
-        public string ErrHttpMethod()
-        {
-            _logger.Log(LogLevel.Warning, "Ilegal access to /api/login");
-            return "Method error, only Post allowed.";
-        }
-
         [HttpPost]
         public async Task<string> Login([FromBody] LoginModel loginModel)
         {

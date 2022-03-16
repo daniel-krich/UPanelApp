@@ -13,8 +13,8 @@ namespace UserPanel.Services
 {
     public class Authenticator : IAuthenticator
     {
-        private static string LoginUrl { get; } = "http://127.0.0.1/api/login";
-        private static string RegisterUrl { get; } = "http://127.0.0.1/api/register";
+        private static string LoginUrl { get; } = "http://127.0.0.1:3001/api/login";
+        private static string RegisterUrl { get; } = "http://127.0.0.1:3001/api/register";
         public UserModel User { get; set; }
         public bool Authorized { get; set; }
 
